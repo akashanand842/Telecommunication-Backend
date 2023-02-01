@@ -22,7 +22,6 @@ public class DoctorController {
         return false;
     }
 
-    public
 
     //
 }
