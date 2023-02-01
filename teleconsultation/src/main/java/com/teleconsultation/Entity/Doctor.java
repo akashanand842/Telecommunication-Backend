@@ -19,8 +19,8 @@ import javax.persistence.Id;
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
-    private String name;
+    private Long doctorId;
+    private String doctorName;
     private String contact;
     private String password;
     private String emailId;
