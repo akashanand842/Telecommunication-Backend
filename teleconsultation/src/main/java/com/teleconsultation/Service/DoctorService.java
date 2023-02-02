@@ -13,7 +13,6 @@ import java.util.List;
 public interface DoctorService {
     public boolean doctorLogin(Doctor doctor);
     public Doctor addDoctor(Doctor doctor);
-
     public void scheduleFollowUp(Patient patient);
     public Prescription issuePrescription(Patient patient);
     public List<Patient> viewFollowUp();

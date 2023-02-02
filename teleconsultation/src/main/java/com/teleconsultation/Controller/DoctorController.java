@@ -4,19 +4,21 @@ import com.teleconsultation.Entity.Doctor;
 import com.teleconsultation.Repository.DoctorRepository;
 import com.teleconsultation.Service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/doctor")
 public class DoctorController {
     //login
     @Autowired
     private DoctorService doctorService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public boolean login(Doctor doctor){
@@ -27,7 +29,14 @@ public class DoctorController {
 
     @PostMapping("/addDoctor")
     public Doctor addDoctor(Doctor doctor){
-        return doctorService.addDoctor(doctor);
+        Doctor doctor1 = Doctor.builder()
+                .doctorName(doctor.getDoctorName())
+                .contact(doctor.getContact())
+                .emailId(doctor.getEmailId())
+                .password(passwordEncoder.encode(doctor.getPassword()))
+                .status(true)
+                .build();
+        return doctorService.addDoctor(doctor1);
     }
 
 
