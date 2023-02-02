@@ -24,5 +24,6 @@ public class Doctor {
     private String contact;
     private String password;
     private String emailId;
+    private String status;
 
 }

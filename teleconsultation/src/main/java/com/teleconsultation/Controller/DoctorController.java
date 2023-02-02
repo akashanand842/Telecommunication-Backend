@@ -5,21 +5,29 @@ import com.teleconsultation.Repository.DoctorRepository;
 import com.teleconsultation.Service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/doctor")
 public class DoctorController {
     //login
     @Autowired
     private DoctorService doctorService;
 
-    @GetMapping("/login/doctor}")
+    @GetMapping("/login")
     public boolean login(Doctor doctor){
-        if(doctorService.isAllowed(doctor))
+        if(doctorService.doctorLogin(doctor))
             return true;
         return false;
+    }
+
+    @PostMapping("/addDoctor")
+    public Doctor addDoctor(Doctor doctor){
+        return doctorService.addDoctor(doctor);
     }
 
 
