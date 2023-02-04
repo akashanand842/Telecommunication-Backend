@@ -18,11 +18,12 @@ public class PatientController {
     // Patient joins the Queue so set status = true.
     @PostMapping("/joinqueue")
     public boolean joinQueue(Patient patient){
-        if(patient.isStatusQueue()){
-            patient.setStatusQueue(true);
-            patientService.joinQueue(patient);
-            return true;
+        //if patient already in queue
+        if(patient.isStatusQueue()) {
+            return false;
         }
-        return false;
+        patient.setStatusQueue(true);
+        patientService.joinQueue(patient);
+        return true;
     }
 }

@@ -10,5 +10,7 @@ import java.util.Queue;
 public interface QueueService {
 
 
-    void addQueue(Patient patient);
+    void addQueuePatient(Patient patient);
+
+    void addQueueDoctor(Doctor doctor);
 }

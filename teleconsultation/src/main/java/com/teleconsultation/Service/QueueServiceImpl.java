@@ -16,7 +16,12 @@ public class QueueServiceImpl implements QueueService{
     private PatientRepository patientRepository;
 
     @Override
-    public void addQueue(Patient patient) {
+    public void addQueuePatient(Patient patient) {
         patientWaiting.add(patient);
+    }
+
+    @Override
+    public void addQueueDoctor(Doctor doctor) {
+        availableDoctors.add(doctor);
     }
 }

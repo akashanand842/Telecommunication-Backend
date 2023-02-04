@@ -23,5 +23,4 @@ public class Patient {
     private String gender;
     private String medicalHistory;
     private boolean statusQueue;
-
 }
