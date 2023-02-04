@@ -42,4 +42,10 @@ public class DoctorServiceImpl implements DoctorService {
     public void cancelFollowUp(Patient patient) {
 
     }
+
+    @Override
+    public List<Doctor> viewDoctor() {
+        List<Doctor> list =  doctorRepository.findAll();
+        return list;
+    }
 }

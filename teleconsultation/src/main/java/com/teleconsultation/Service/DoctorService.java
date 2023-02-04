@@ -17,4 +17,6 @@ public interface DoctorService {
     public Prescription issuePrescription(Patient patient);
     public List<Patient> viewFollowUp();
     public void cancelFollowUp(Patient patient);
+
+    List<Doctor> viewDoctor();
 }

@@ -22,5 +22,6 @@ public class Patient {
     private int age;
     private String gender;
     private String medicalHistory;
+    private boolean statusQueue;
 
 }

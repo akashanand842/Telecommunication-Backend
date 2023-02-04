@@ -9,8 +9,16 @@ import org.springframework.stereotype.Service;
 public class PatientServiceImpl implements PatientService{
     @Autowired
     private PatientRepository patientRepository;
+
+    @Autowired
+    private QueueService queueService;
     @Override
     public boolean patientLogin(Patient patient) {
         return false;
+    }
+
+    @Override
+    public void joinQueue(Patient patient) {
+        queueService.addQueue(patient);
     }
 }

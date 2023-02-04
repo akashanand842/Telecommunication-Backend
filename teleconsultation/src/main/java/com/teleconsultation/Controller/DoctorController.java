@@ -34,11 +34,15 @@ public class DoctorController {
                 .contact(doctor.getContact())
                 .emailId(doctor.getEmailId())
                 .password(passwordEncoder.encode(doctor.getPassword()))
-                .status(true)
+                .statusQueue(true)
                 .build();
         return doctorService.addDoctor(doctor1);
     }
 
+    @GetMapping("/viewDoctor")
+    public List<Doctor> viewDoctor(){
+        return doctorService.viewDoctor();
+    }
 
     //
 }
