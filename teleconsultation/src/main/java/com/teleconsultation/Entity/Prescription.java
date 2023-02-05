@@ -19,5 +19,13 @@ public class Prescription {
 
     )
     private Patient patient;
+    @ManyToOne(
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(
+            name = "doctor_id"
+    )
+    private Doctor doctor;
+
 
 }

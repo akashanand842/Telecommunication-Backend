@@ -13,4 +13,5 @@ public interface QueueService {
     void addQueuePatient(Patient patient);
 
     void addQueueDoctor(Doctor doctor);
+    void setMeeting();
 }

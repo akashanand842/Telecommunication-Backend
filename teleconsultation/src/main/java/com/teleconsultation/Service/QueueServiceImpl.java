@@ -15,6 +15,8 @@ public class QueueServiceImpl implements QueueService{
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private ConsultationService consultationService;
     @Override
     public void addQueuePatient(Patient patient) {
         patientWaiting.add(patient);
@@ -23,5 +25,14 @@ public class QueueServiceImpl implements QueueService{
     @Override
     public void addQueueDoctor(Doctor doctor) {
         availableDoctors.add(doctor);
+    }
+
+    // While can be removed later if cron job is for every second
+    public void setMeeting(){
+        while(availableDoctors.isEmpty() == false || patientWaiting.isEmpty() == false) {
+            Doctor doctor = availableDoctors.poll();
+            Patient patient = patientWaiting.poll();
+            consultationService.startConsultation(doctor, patient);
+        }
     }
 }
