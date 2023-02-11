@@ -7,4 +7,6 @@ public interface PatientService {
     public boolean patientLogin(Patient patient);
 
     void joinQueue(Patient patient);
+
+    Patient getPatientById(Long patientId);
 }

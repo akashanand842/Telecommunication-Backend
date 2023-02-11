@@ -6,10 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -25,5 +23,7 @@ public class Doctor {
     private String password;
     private String emailId;
     private boolean statusQueue;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctor")
+    private List<Prescription> prescription;
 
 }

@@ -3,11 +3,9 @@ package com.teleconsultation.Service;
 import com.teleconsultation.Entity.Doctor;
 import com.teleconsultation.Entity.Patient;
 import com.teleconsultation.Entity.Prescription;
-import com.teleconsultation.Repository.DoctorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface DoctorService {
@@ -19,4 +17,6 @@ public interface DoctorService {
     public void cancelFollowUp(Patient patient);
 
     List<Doctor> viewDoctor();
+
+    Doctor getDoctorById(Long doctorId);
 }

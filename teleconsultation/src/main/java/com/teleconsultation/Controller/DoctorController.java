@@ -1,8 +1,12 @@
 package com.teleconsultation.Controller;
 
 import com.teleconsultation.Entity.Doctor;
+import com.teleconsultation.Entity.Patient;
+import com.teleconsultation.Entity.Prescription;
+import com.teleconsultation.Model.PrescriptionModel;
 import com.teleconsultation.Repository.DoctorRepository;
 import com.teleconsultation.Service.DoctorService;
+import com.teleconsultation.Service.PatientService;
 import com.teleconsultation.Service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +21,9 @@ public class DoctorController {
     //login
     @Autowired
     private DoctorService doctorService;
+
+    @Autowired
+    private PatientService patientService;
     @Autowired
     private QueueService queueService;
     @Autowired
@@ -31,7 +38,7 @@ public class DoctorController {
     }
 
     //after adding doctor initially he is not in queue. so statusQueue = false
-    @PostMapping("/add")
+    @PostMapping("/add/doctor")
     public Doctor addDoctor(Doctor doctor){
         Doctor doctor1 = Doctor.builder()
                 .doctorName(doctor.getDoctorName())
@@ -49,15 +56,21 @@ public class DoctorController {
     }
 
     @PostMapping("/joinqueue")
-    public boolean joinQueue(Doctor doctor){
-        // if already in queue return false;
-        if(doctor.isStatusQueue()) {
-            return false;
-        }
-        doctor.setStatusQueue(true);
-        queueService.addQueueDoctor(doctor);
-        return true;
+    public void joinQueue(Doctor doctor){
+        // if already in queue return false
+        queueService.addDoctorToQueue(doctor);
     }
 
-    //
+    @PostMapping("/add/prescription/{patientId}/{doctorId}")
+    public void addPrescription(@PathVariable Long patientId, @PathVariable Long doctorId,@RequestBody PrescriptionModel prescriptionModel){
+        Prescription prescription = Prescription.builder()
+                .dosage(prescriptionModel.getDosage())
+                .medicineName(prescriptionModel.getMedicineName())
+                .duration(prescriptionModel.getDuration())
+                .doctor(doctorService.getDoctorById(doctorId))
+                .patient(patientService.getPatientById(patientId))
+                .build();
+
+    }
+
 }

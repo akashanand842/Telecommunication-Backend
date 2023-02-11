@@ -23,4 +23,10 @@ public class Patient {
     private String gender;
     private String medicalHistory;
     private boolean statusQueue;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient")
+    private List<Prescription> prescription;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private HealthRecord healthRecord;
+
 }

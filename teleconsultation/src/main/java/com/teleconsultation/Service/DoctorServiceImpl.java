@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -47,5 +48,10 @@ public class DoctorServiceImpl implements DoctorService {
     public List<Doctor> viewDoctor() {
         List<Doctor> list =  doctorRepository.findAll();
         return list;
+    }
+
+    @Override
+    public Doctor getDoctorById(Long doctorId) {
+        return doctorRepository.findById(doctorId).get();
     }
 }

@@ -1,13 +1,21 @@
 package com.teleconsultation.Entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long prescriptionId;
-
     private String medicineName;
     private String dosage;
     private String duration;
@@ -16,7 +24,6 @@ public class Prescription {
     )
     @JoinColumn(
             name = "patient_id"
-
     )
     private Patient patient;
     @ManyToOne(

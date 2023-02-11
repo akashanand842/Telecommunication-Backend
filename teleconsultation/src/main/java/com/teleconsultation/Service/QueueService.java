@@ -10,8 +10,11 @@ import java.util.Queue;
 public interface QueueService {
 
 
-    void addQueuePatient(Patient patient);
+    public void addPatientToQueue(Patient patient);
 
-    void addQueueDoctor(Doctor doctor);
-    void setMeeting();
+    public void leavePatientQueue(Patient patient);
+    public void addDoctorToQueue(Doctor doctor);
+    public void leaveDoctorQueue(Doctor doctor);
+    public Patient getNextPatient();
+    public Doctor getNextAvailableDoctor();
 }
