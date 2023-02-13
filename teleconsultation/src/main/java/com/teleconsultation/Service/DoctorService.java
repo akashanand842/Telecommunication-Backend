@@ -19,4 +19,5 @@ public interface DoctorService {
     List<Doctor> viewDoctor();
 
     Doctor getDoctorById(Long doctorId);
+
 }

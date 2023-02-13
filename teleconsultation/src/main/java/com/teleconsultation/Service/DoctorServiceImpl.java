@@ -54,4 +54,5 @@ public class DoctorServiceImpl implements DoctorService {
     public Doctor getDoctorById(Long doctorId) {
         return doctorRepository.findById(doctorId).get();
     }
+
 }

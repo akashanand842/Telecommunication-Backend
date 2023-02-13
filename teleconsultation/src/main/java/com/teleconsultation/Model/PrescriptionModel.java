@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PrescriptionModel {
+    private String medicalFinding;
     private String medicineName;
     private String dosage;
     private String duration;

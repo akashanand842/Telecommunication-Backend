@@ -16,6 +16,7 @@ public class Prescription {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long prescriptionId;
+    private String medicalFinding;
     private String medicineName;
     private String dosage;
     private String duration;
