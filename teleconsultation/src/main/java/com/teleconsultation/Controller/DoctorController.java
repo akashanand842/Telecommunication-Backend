@@ -8,13 +8,15 @@ import com.teleconsultation.Model.PrescriptionModel;
 import com.teleconsultation.Repository.DoctorRepository;
 import com.teleconsultation.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/doctor")
 public class DoctorController {
     //login
@@ -28,8 +30,8 @@ public class DoctorController {
     private PatientService patientService;
     @Autowired
     private QueueService queueService;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+//    @Autowired
+//    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public boolean login(Doctor doctor){
@@ -40,16 +42,17 @@ public class DoctorController {
     }
 
     //after adding doctor initially he is not in queue. so statusQueue = false
-    @PostMapping("/add/doctor")
-    public Doctor addDoctor(Doctor doctor){
+    @PostMapping("/add")
+    public Doctor addDoctor(@RequestBody Doctor doctor){
         Doctor doctor1 = Doctor.builder()
                 .doctorName(doctor.getDoctorName())
                 .contact(doctor.getContact())
                 .emailId(doctor.getEmailId())
-                .password(passwordEncoder.encode(doctor.getPassword()))
+                .password(doctor.getPassword())
                 .statusQueue(false)
                 .build();
         return doctorService.addDoctor(doctor1);
+
     }
 
     @GetMapping("/view")
@@ -63,11 +66,11 @@ public class DoctorController {
         queueService.addDoctorToQueue(doctor);
     }
     @GetMapping("/view/healthrecord/{patientId}")
-    private HealthRecord viewHealthRecord(@PathVariable Long patientId){
+    private HealthRecord viewHealthRecord(@PathVariable("patientId") Long patientId){
         return healthRecordService.viewHealthRecord(patientId);
     }
     @PostMapping("/add/prescription/{patientId}/{doctorId}")
-    public void addPrescription(@PathVariable Long patientId, @PathVariable Long doctorId,@RequestBody PrescriptionModel prescriptionModel){
+    public ResponseEntity<Boolean> addPrescription(@PathVariable Long patientId, @PathVariable Long doctorId, @RequestBody PrescriptionModel prescriptionModel){
         Prescription prescription = Prescription.builder()
                 .medicalFinding(prescriptionModel.getMedicalFinding())
                 .dosage(prescriptionModel.getDosage())
@@ -76,7 +79,8 @@ public class DoctorController {
                 .doctor(doctorService.getDoctorById(doctorId))
                 .patient(patientService.getPatientById(patientId))
                 .build();
-        prescriptionService.add(prescription);
+        Prescription createdPrescription = prescriptionService.add(prescription);
+        return ResponseEntity.status(HttpStatus.CREATED).body(true);
     }
 
 }

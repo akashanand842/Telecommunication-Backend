@@ -9,4 +9,6 @@ public interface PatientService {
     void joinQueue(Patient patient);
 
     Patient getPatientById(Long patientId);
+
+    Patient addPatient(Patient patient);
 }

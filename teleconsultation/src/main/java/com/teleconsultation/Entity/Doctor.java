@@ -18,11 +18,17 @@ public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long doctorId;
+    @Column(name = "name")
     private String doctorName;
+    @Column(name = "contact")
     private String contact;
+    @Column(name = "password")
     private String password;
+    @Column(name = "email")
     private String emailId;
+    @Column(name = "status")
     private boolean statusQueue;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctor")
     private List<Prescription> prescription;
 

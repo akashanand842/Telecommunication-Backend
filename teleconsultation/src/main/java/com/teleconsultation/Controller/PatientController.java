@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.processing.Generated;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/patient")
 public class PatientController {
     @Autowired
@@ -38,7 +38,12 @@ public class PatientController {
         return true;
     }
 
-    // Theek karna hai prescription ko
+    @PostMapping("/add")
+    public Patient addPatient(@RequestBody Patient patient){
+        return patientService.addPatient(patient);
+    }
+
+
     @GetMapping("/prescription/{patientId}/{doctorId}")
     public ResponseEntity<byte[]> downloadPrescription(@PathVariable Long patientId, @PathVariable Long doctorId) {
         Prescription prescription = prescriptionService.searchByPatientAndDoctor(patientId, doctorId);

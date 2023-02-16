@@ -52,7 +52,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public Doctor getDoctorById(Long doctorId) {
-        return doctorRepository.findById(doctorId).get();
+        return doctorRepository.findDoctorByDoctorId(doctorId);
     }
 
 }
