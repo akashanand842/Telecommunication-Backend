@@ -9,10 +9,12 @@ import com.teleconsultation.Repository.DoctorRepository;
 import com.teleconsultation.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -43,7 +45,7 @@ public class DoctorController {
 
     //after adding doctor initially he is not in queue. so statusQueue = false
     @PostMapping("/add")
-    public Doctor addDoctor(@RequestBody Doctor doctor){
+    public Doctor addDoctor(@Valid @RequestBody Doctor doctor){
         Doctor doctor1 = Doctor.builder()
                 .doctorName(doctor.getDoctorName())
                 .contact(doctor.getContact())

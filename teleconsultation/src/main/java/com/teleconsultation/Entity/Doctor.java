@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,7 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long doctorId;
     @Column(name = "name")
+    @NotBlank(message = "Specify Doctor Name")
     private String doctorName;
     @Column(name = "contact")
     private String contact;
@@ -30,6 +32,6 @@ public class Doctor {
     private boolean statusQueue;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctor")
-    private List<Prescription> prescription;
+    private List<Prescription> prescriptions;
 
 }
