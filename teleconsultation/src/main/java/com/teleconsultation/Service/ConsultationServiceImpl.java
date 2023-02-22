@@ -1,8 +1,6 @@
 package com.teleconsultation.Service;
 
-import com.teleconsultation.Entity.Doctor;
-import com.teleconsultation.Entity.Patient;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.teleconsultation.Service.Impl.ConsultationService;
 import org.springframework.stereotype.Service;
 
 @Service

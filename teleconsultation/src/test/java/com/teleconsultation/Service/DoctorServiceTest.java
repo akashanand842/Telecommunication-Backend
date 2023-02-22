@@ -3,6 +3,7 @@ package com.teleconsultation.Service;
 import com.teleconsultation.Entity.Doctor;
 import com.teleconsultation.Entity.Prescription;
 import com.teleconsultation.Repository.DoctorRepository;
+import com.teleconsultation.Service.Impl.DoctorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

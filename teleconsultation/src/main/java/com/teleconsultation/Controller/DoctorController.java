@@ -2,14 +2,13 @@ package com.teleconsultation.Controller;
 
 import com.teleconsultation.Entity.Doctor;
 import com.teleconsultation.Entity.HealthRecord;
-import com.teleconsultation.Entity.Patient;
 import com.teleconsultation.Entity.Prescription;
+import com.teleconsultation.Model.HealthRecordModel;
 import com.teleconsultation.Model.PrescriptionModel;
 import com.teleconsultation.Repository.DoctorRepository;
-import com.teleconsultation.Service.*;
+import com.teleconsultation.Service.Impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +53,6 @@ public class DoctorController {
                 .statusQueue(false)
                 .build();
         return doctorService.addDoctor(doctor1);
-
     }
 
     @GetMapping("/view")
@@ -62,17 +60,39 @@ public class DoctorController {
         return doctorService.viewDoctor();
     }
 
-    @PostMapping("/joinqueue")
-    public void joinQueue(Doctor doctor){
-        // if already in queue return false
-        queueService.addDoctorToQueue(doctor);
+    @GetMapping("/get-name/{doctorId}")
+    public String getDoctorName(@PathVariable Long doctorId){
+        return doctorService.getDoctorById(doctorId).getDoctorName();
     }
-    @GetMapping("/view/healthrecord/{patientId}")
-    private HealthRecord viewHealthRecord(@PathVariable("patientId") Long patientId){
-        return healthRecordService.viewHealthRecord(patientId);
+    //view Health Record of a particular patient
+    @GetMapping("/healthrecord/{patientId}")
+    public HealthRecordModel viewHealthRecord(@PathVariable("patientId") Long patientId){
+        HealthRecord healthRecord = healthRecordService.viewHealthRecord(patientId);
+        HealthRecordModel healthRecordModel = HealthRecordModel.builder()
+                .medicalRecords(healthRecord.getMedicalRecords())
+                .attachment(healthRecord.getAttachment())
+                .build();
+        return healthRecordModel;
     }
+
+    // add Health Record of a particular Patient by Doctor
+    @PostMapping("/healthrecord/{patientId}")
+    public HealthRecordModel addHealthRecord(@PathVariable Long patientId, @RequestBody HealthRecordModel healthRecordModel){
+        HealthRecord healthRecord = HealthRecord.builder()
+                .medicalRecords(healthRecordModel.getMedicalRecords())
+                .attachment(healthRecordModel.getAttachment())
+                .patient(patientService.getPatientById(patientId))
+                .build();
+        HealthRecord healthRecord1 = healthRecordService.addHealthRecord(healthRecord);
+        HealthRecordModel healthRecordModel1 = HealthRecordModel.builder()
+                .medicalRecords(healthRecordModel.getMedicalRecords())
+                .attachment(healthRecordModel.getAttachment())
+                .build();
+        return healthRecordModel1;
+    }
+
     @PostMapping("/add/prescription/{patientId}/{doctorId}")
-    public ResponseEntity<Boolean> addPrescription(@PathVariable Long patientId, @PathVariable Long doctorId, @RequestBody PrescriptionModel prescriptionModel){
+    public ResponseEntity<Boolean> addPrescription(@PathVariable("patientId") Long patientId, @PathVariable("doctorId") Long doctorId, @RequestBody PrescriptionModel prescriptionModel){
         Prescription prescription = Prescription.builder()
                 .medicalFinding(prescriptionModel.getMedicalFinding())
                 .dosage(prescriptionModel.getDosage())

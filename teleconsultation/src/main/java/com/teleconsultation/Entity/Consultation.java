@@ -20,36 +20,12 @@ public class Consultation {
     private Long consultationId;
     private String date;
     private String time;
-    @ManyToMany(
-            cascade = CascadeType.ALL
-    )
-    @JoinTable(
-            name = "patient_consultation_map",
-            joinColumns = @JoinColumn(
-                    name = "consultation_id",
-                    referencedColumnName = "consultationId"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "patient_id",
-                    referencedColumnName = "patientId"
-            )
-    )
-    private List<Patient> patientList;
-    @ManyToMany(
-            cascade = CascadeType.ALL
-    )
-    @JoinTable(
-            name = "doctor_consultation_map",
-            joinColumns = @JoinColumn(
-                    name = "consultation_id",
-                    referencedColumnName = "consultationId"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "doctor_id",
-                    referencedColumnName = "doctorId"
-            )
-    )
-    private List<Doctor> doctorList;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "patient_id", referencedColumnName = "patientId")
+    private Patient patient;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "doctor_id", referencedColumnName = "doctorId")
+    private Doctor doctor;
     String type;
 
 

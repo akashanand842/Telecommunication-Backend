@@ -1,9 +1,10 @@
 package com.teleconsultation.Service;
 
-import com.teleconsultation.Entity.Doctor;
 import com.teleconsultation.Entity.Patient;
 import com.teleconsultation.Repository.DoctorRepository;
 import com.teleconsultation.Repository.PatientRepository;
+import com.teleconsultation.Service.Impl.ConsultationService;
+import com.teleconsultation.Service.Impl.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 @Service
-public class QueueServiceImpl implements QueueService{
+public class QueueServiceImpl implements QueueService {
     private Queue<Patient> patientsQueue = new LinkedList<>();
-    private Queue<Doctor> availableDoctors = new LinkedList<>();
     @Autowired
     private PatientRepository patientRepository;
     @Autowired
@@ -32,17 +32,6 @@ public class QueueServiceImpl implements QueueService{
     }
 
     @Override
-    public void addDoctorToQueue(Doctor doctor) {
-        doctor.setStatusQueue(true);
-        availableDoctors.offer(doctor);
-    }
-
-    @Override
-    public void leaveDoctorQueue(Doctor doctor) {
-        doctor.setStatusQueue(false);
-    }
-
-    @Override
     public Patient getNextPatient() {
         Patient patient = patientsQueue.poll();
         if(patient != null && patient.isStatusQueue()){
@@ -54,15 +43,4 @@ public class QueueServiceImpl implements QueueService{
         return getNextPatient();
     }
 
-    @Override
-    public Doctor getNextAvailableDoctor() {
-        Doctor doctor = availableDoctors.poll();
-        if(doctor != null && doctor.isStatusQueue()){
-            doctor.setStatusQueue(false);
-            return doctor;
-        } else if (doctor == null) {
-            return null;
-        }
-        return getNextAvailableDoctor();
-    }
 }

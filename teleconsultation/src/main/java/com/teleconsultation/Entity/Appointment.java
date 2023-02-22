@@ -9,15 +9,16 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class HealthRecord {
+@AllArgsConstructor
+@Builder
+public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long healthId;
-    private String medicalRecords;
-    private String attachment;
+    private Long appointmentId;
+    private String date;
+    private String symptoms;
+    private String description;
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "patient_id")
     private Patient patient;
